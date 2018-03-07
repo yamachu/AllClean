@@ -16,4 +16,8 @@
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <NETCorePlatformsImplicitPackageVersion>2.0.1</NETCorePlatformsImplicitPackageVersion>
+  </PropertyGroup>
+
 </Project>
