@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.Extensions.CommandLineUtils;
 
 namespace AllClean
 {
@@ -10,27 +11,33 @@ namespace AllClean
             "obj",
         };
 
+
+
         static void Main(string[] args)
         {
-            if (args.Length < 1)
-            {
-                System.Console.WriteLine(@"Usage: dotnet allclean <PROJ_DIR> [options]");
-                System.Console.WriteLine();
-                System.Console.WriteLine("Arguments:");
-                System.Console.WriteLine("  <PROJ_DIR>: project root directory that contains {bin,obj} directory.");
-                System.Console.WriteLine();
-                System.Console.WriteLine("Options:");
-                System.Console.WriteLine("  -i  Interactive mode");
-                return;
-            }
+            var app = new CommandLineApplication(throwOnUnexpectedArg: true);
 
-            var dir = args[0];
-            var interactive = args.Length == 2;
+            app.Name = nameof(AllClean);
+            app.Description = "Clean 'bin' and 'obj' directory";
+            app.HelpOption("-h|--help");
 
-            foreach (var p in Target)
+            var targetDirectoryArgument = app.Argument("PROJ_DIR", "project root directory that contains {bin, obj} directory. default: .");
+            var interactiveOption = app.Option("-i", "Interactive mode", CommandOptionType.NoValue);
+
+            app.OnExecute(() =>
             {
-                DeleteDir(dir, p, interactive);
-            }
+                var targetDir = targetDirectoryArgument.Value ?? ".";
+                var interactive = interactiveOption.HasValue();
+
+                foreach (var p in Target)
+                {
+                    DeleteDir(targetDir, p, interactive);
+                }
+
+                return 0;
+            });
+
+            app.Execute(args);
         }
 
         static void DeleteDir(string dirPath, string subDir, bool interactive = false)
