@@ -5,6 +5,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <PackAsTool>true</PackAsTool>
+    <PackageVersion>0.1.0</PackageVersion>
+    <Version>0.1.0</Version>
+    <Authors>Yusuke Yamada</Authors>
+    <PackageProjectUrl>https://github.com/yamachu/AllClean</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/yamachu/AllClean/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
